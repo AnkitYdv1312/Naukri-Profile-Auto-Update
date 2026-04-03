@@ -2,15 +2,6 @@ name: Update Naukri Profile
 
 on:
   workflow_dispatch:
-    inputs:
-      headline_suffix:
-        description: "Optional text to append in headline"
-        required: false
-        default: "Updated manually from GitHub Actions"
-      dry_run:
-        description: "Run login and navigation only"
-        required: false
-        default: "false"
 
 jobs:
   update-profile:
@@ -32,12 +23,10 @@ jobs:
           pip install -r requirements.txt
           playwright install --with-deps chromium
 
-      - name: Run updater
+      - name: Run script
         env:
           NAUKRI_EMAIL: ${{ secrets.NAUKRI_EMAIL }}
           NAUKRI_PASSWORD: ${{ secrets.NAUKRI_PASSWORD }}
-          HEADLINE_SUFFIX: ${{ github.event.inputs.headline_suffix }}
-          DRY_RUN: ${{ github.event.inputs.dry_run }}
         run: python script.py
 
       - name: Upload debug artifacts
